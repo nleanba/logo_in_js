@@ -17,15 +17,20 @@
     </strong>
   </noscript>
 
-  <textarea rows="5" id="input"></textarea> 
-  <button id="run">Run</button>
-  <br>
-  <div class="wrapper">
-    <canvas width="1000" height="1000" id="canvas"></canvas>
-    <svg id="turtle" style="width:24px;height:24px" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" />
-    </svg>
-  </div>
+  <main>
+    <div class="controls">
+      <textarea rows="5" id="input"></textarea>
+      <button id="run">Run</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <div class="wrapper">
+      <canvas width="1000" height="1000" id="canvas"></canvas>
+      <svg id="turtle" style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" />
+      </svg>
+    </div>
+  </main>
 
   <script src="index.js"></script>
 </body>

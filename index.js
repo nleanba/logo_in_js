@@ -1,3 +1,5 @@
+// Variables
+
 const turtle = document.getElementById('turtle')
 const input = document.getElementById('input')
 const runButton = document.getElementById('run')
@@ -15,7 +17,18 @@ const state = {
   penDown: true,
 }
 
-function initialize () {
+// Event-Listeners
+
+runButton.addEventListener('click', run())
+resetButton.addEventListener('click', reset())
+
+// Program
+
+reset()
+
+// Functions
+
+function reset () {
   state.x = 500
   state.y = 500
   state.rotation = 0
@@ -23,6 +36,14 @@ function initialize () {
 
   turtle.style.top = state.y - constants.turtleRadius
   turtle.style.left = state.x - constants.turtleRadius
+
+  canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
-initialize()
+function run (distance) {
+  return;
+}
+
+function move (distance) {
+  return;
+}
