@@ -61,6 +61,11 @@ textarea {
   border-radius: 0;
 }
 
+#reset {
+  background-color: #81C784;
+  border-color: #1B5E20;
+}
+
 #output {
   margin-top: 1em;
   border: 1px solid #888;
