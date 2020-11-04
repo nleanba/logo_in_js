@@ -19,8 +19,8 @@ const state = {
 
 // Event-Listeners
 
-runButton.addEventListener('click', run())
-resetButton.addEventListener('click', reset())
+runButton.addEventListener('click', run)
+resetButton.addEventListener('click', reset)
 
 // Program
 
@@ -40,8 +40,9 @@ function reset () {
   canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
-function run (distance) {
-  return;
+function run () {
+  const code = input.value.replace(/\n/g, ' ').split(' ')
+  console.log(code)
 }
 
 function move (distance) {
