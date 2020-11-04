@@ -39,14 +39,14 @@ resetButton.addEventListener('click', reset)
 
 // Program
 
-message(`Currently supported are ${Object.keys(internalFunctions).join(', ')}`, 'msg')
 reset()
+message(`Currently supported are ${Object.keys(internalFunctions).join(', ')}`, 'msg')
 
 // Functions
 
 function reset() {
 
-  message('Resetting', 'msg')
+  output.innerHTML = ''
 
   state.x = 500
   state.y = 500
