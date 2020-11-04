@@ -20,6 +20,14 @@ const internalFunctions = {
   fd: [fd, 1],
   back: [bk, 1,],
   bk: [bk, 1],
+  left: [lt, 1],
+  lt: [lt, 1],
+  right: [rt, 1],
+  rt: [rt, 1],
+  penup: [pu, 0],
+  pu: [pu, 0],
+  pendown: [pd, 0],
+  pd: [pd, 0],
 }
 
 // Event-Listeners
@@ -29,27 +37,18 @@ resetButton.addEventListener('click', reset)
 
 // Program
 
-;(() => {
-  const msg = document.createElement('div')
-  msg.classList.add('msg')
-  msg.textContent = `Currently supported are "${Object.keys(internalFunctions).join('", "')}"`
-  output.append(msg)
-})()
-
+message(`Currently supported are ${Object.keys(internalFunctions).join(', ')}`, 'msg')
 reset()
 
 // Functions
 
 function reset() {
 
-  const msg = document.createElement('div')
-  msg.classList.add('msg')
-  msg.textContent = `Resetting`
-  output.append(msg)
+  message('Resetting', 'msg')
 
   state.x = 500
   state.y = 500
-  state.rotation = 180
+  state.rotation = 0
   state.penDown = true
 
   turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
@@ -57,7 +56,9 @@ function reset() {
   canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
-function moveTo(x, y) {
+function goto (x=state.x, y=state.y, rotation=state.rotation) {
+  const hideturtle = x !== Math.min(1000, Math.max(0, x)) || y !== Math.min(1000, Math.max(0, y))
+
   if (state.penDown) {
     // Drawing the line
     canvasCtx.beginPath()
@@ -68,19 +69,47 @@ function moveTo(x, y) {
 
   state.x = x
   state.y = y
+  console.log(rotation)
+  state.rotation = rotation % 360
 
   // Moving the turtle
-  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
+  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px; transform: rotate(${state.rotation}deg);`
+  turtle.hidden = hideturtle
+
+  console.log(state)
 }
 
-function fd(distance) {
-  const x = state.x + (distance * Math.sin(state.rotation * Math.PI / 180))
-  const y = state.y + (distance * Math.cos(state.rotation * Math.PI / 180))
-  moveTo(x, y)
+function fd (distance) {
+  const x = state.x + (distance * Math.sin((state.rotation - 0) * Math.PI / 180))
+  const y = state.y + (distance * Math.cos((state.rotation - 180) * Math.PI / 180))
+  goto(x, y)
 }
 
-function bk(distance) {
+function bk (distance) {
   fd(-distance)
+}
+
+function lt (degrees) {
+  goto(undefined, undefined, +state.rotation - +degrees)
+}
+
+function rt (degrees) {
+  goto(undefined, undefined, +state.rotation + +degrees)
+}
+
+function message (msg, cl='') {
+  const el = document.createElement('div')
+  el.classList.add(cl)
+  el.textContent = msg
+  output.append(el)
+}
+
+function pu () {
+  state.penDown = false
+}
+
+function pd () {
+  state.penDown = true
 }
 
 // Parser
@@ -105,13 +134,11 @@ function run() {
         args.push(code.shift())
       }
       internalFunctions[token][0](...args)
-      continue;
+      continue
     }
 
-    const error = document.createElement('div')
-    error.classList.add('error')
-    error.textContent = `Don't know what to do with "${token}" on line ${line}`
-    output.append(error)
+    message(`Don't know what to do with "${token}" on line ${line}`, 'error')
+    break
   }
 }
 
