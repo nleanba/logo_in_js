@@ -25,11 +25,11 @@ const internalFunctions = {
 // Event-Listeners
 
 runButton.addEventListener('click', run)
-resetButton.addEventListener('click', reset);
+resetButton.addEventListener('click', reset)
 
 // Program
 
-(() => {
+;(() => {
   const msg = document.createElement('div')
   msg.classList.add('msg')
   msg.textContent = `Currently supported are "${Object.keys(internalFunctions).join('", "')}"`
