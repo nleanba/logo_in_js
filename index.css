@@ -61,9 +61,14 @@ textarea {
   border-radius: 0;
 }
 
-#reset {
+#run {
   background-color: #81C784;
   border-color: #1B5E20;
+}
+
+#reset {
+  background-color: #FFD54F;
+  border-color: #FFA000;
 }
 
 #output {
