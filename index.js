@@ -118,7 +118,7 @@ function pd () {
 // Parser
 
 function run() {
-  const code = input.value.replace(/\n/g, ' \n ').split(' ')
+  const code = input.value.replace(/\n/g, ' \n ').split(' ').filter(e => e !== '')
 
   let line = 1
 
