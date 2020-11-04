@@ -4,11 +4,15 @@
 
 body {
   background-color: #ddd;
+  margin: 0;
 }
 
 main {
   margin: 0 auto;
-  width: 1000px;
+  width: 1002px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 svg {
@@ -23,8 +27,9 @@ textarea {
 .wrapper {
   position: relative;
   background-color: #fff;
-  width: 1000px;
-  height: 1000px;
+  width: 1002px;
+  height: 1002px;
+  border: 1px solid #888;
 }
 
 .controls {
@@ -32,4 +37,39 @@ textarea {
   grid-template-columns: 1fr auto auto;
   gap: 1em;
   margin: 1em 0;
+}
+
+.controls > * {
+  border: 1px solid #888;
+  border-radius: 0;
+}
+
+#output {
+  margin: 1em 0;
+  border: 1px solid #888;
+  font-family: monospace;
+  background-color: #fff;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#output>div {
+  border-bottom: 1px solid #888;
+  padding: 4px;
+}
+
+#output>div:last-child {
+  border-bottom: none;
+}
+
+#output:empty::after {
+  content: 'Output will appear here';
+  display: block;
+  border-bottom: 1px solid #888;
+  padding: 4px;
+  color: #616161;
+}
+
+.error {
+  background-color: #ffcdd2;
 }
