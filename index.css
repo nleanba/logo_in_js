@@ -1,0 +1,12 @@
+svg {
+  z-index: 10;
+  position: absolute;
+}
+
+textarea {
+  width: 100%;
+}
+
+.wrapper {
+  position: relative;
+}
