@@ -13,8 +13,10 @@ const constants = {
   turtleRadius: turtle.getBoundingClientRect().width / 2,
 }
 
+// holds turtle state, e.g. coordiantes, pen-state, ...
 const state = {}
 
+// maps turtle-commands to js functions and tells the number of arguments
 const internalFunctions = {
   forward: [fd, 1],
   fd: [fd, 1],
@@ -56,7 +58,9 @@ function reset() {
   canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
+// this function does all the moving and drawing, all the others are just wrappers
 function goto (x=state.x, y=state.y, rotation=state.rotation) {
+  // 
   const hideturtle = x !== Math.min(1000, Math.max(0, x)) || y !== Math.min(1000, Math.max(0, y))
 
   if (state.penDown) {
@@ -73,8 +77,7 @@ function goto (x=state.x, y=state.y, rotation=state.rotation) {
   state.rotation = rotation % 360
 
   // Moving the turtle
-  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px; transform: rotate(${state.rotation}deg);`
-  turtle.hidden = hideturtle
+  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px; transform: rotate(${state.rotation}deg); ${hideturtle ? 'display: none' : ''}`
 
   console.log(state)
 }
