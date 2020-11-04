@@ -13,49 +13,74 @@ const constants = {
   turtleRadius: turtle.getBoundingClientRect().width / 2,
 }
 
-const state = {
-  x: 500,
-  y: 500,
-  rotation: 0,
-  penDown: true,
+const state = {}
+
+const internalFunctions = {
+  forward: [fd, 1],
+  fd: [fd, 1],
+  back: [bk, 1,],
+  bk: [bk, 1],
 }
 
 // Event-Listeners
 
 runButton.addEventListener('click', run)
-resetButton.addEventListener('click', reset)
+resetButton.addEventListener('click', reset);
 
 // Program
+
+(() => {
+  const msg = document.createElement('div')
+  msg.classList.add('msg')
+  msg.textContent = `Currently supported are "${Object.keys(internalFunctions).join('", "')}"`
+  output.append(msg)
+})()
 
 reset()
 
 // Functions
 
 function reset() {
+
+  const msg = document.createElement('div')
+  msg.classList.add('msg')
+  msg.textContent = `Resetting`
+  output.append(msg)
+
   state.x = 500
   state.y = 500
-  state.rotation = 0
+  state.rotation = 180
   state.penDown = true
 
-  turtle.style.top = state.y - constants.turtleRadius
-  turtle.style.left = state.x - constants.turtleRadius
+  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
 
   canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
+function moveTo(x, y) {
+  if (state.penDown) {
+    // Drawing the line
+    canvasCtx.beginPath()
+    canvasCtx.moveTo(state.x, state.y);
+    canvasCtx.lineTo(x, y);
+    canvasCtx.stroke();
+  }
+
+  state.x = x
+  state.y = y
+
+  // Moving the turtle
+  turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
+}
+
 function fd(distance) {
-  console.log(`moving ${distance}`);
+  const x = state.x + (distance * Math.sin(state.rotation * Math.PI / 180))
+  const y = state.y + (distance * Math.cos(state.rotation * Math.PI / 180))
+  moveTo(x, y)
 }
 
-function bk (distance) {
+function bk(distance) {
   fd(-distance)
-}
-
-const internalFunctions = {
-  forward: [ fd, 1 ],
-  fd: [ fd, 1 ],
-  back: [ bk, 1, ],
-  bk: [ bk, 1 ],
 }
 
 // Parser
@@ -76,7 +101,7 @@ function run() {
 
     if (Object.keys(internalFunctions).includes(token)) {
       const args = []
-      for (let i = 0; i < internalFunctions[token][1] ; i++) {
+      for (let i = 0; i < internalFunctions[token][1]; i++) {
         args.push(code.shift())
       }
       internalFunctions[token][0](...args)

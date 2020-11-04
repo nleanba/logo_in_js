@@ -12,12 +12,15 @@ main {
   width: 1002px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 1em;
 }
 
 svg {
   z-index: 10;
   position: absolute;
+  width: 24px;
+  height: 24px;
 }
 
 textarea {
@@ -45,12 +48,13 @@ textarea {
 }
 
 #output {
-  margin: 1em 0;
+  margin-top: 1em;
   border: 1px solid #888;
   font-family: monospace;
   background-color: #fff;
   flex: 1;
   overflow-y: auto;
+  min-height: 100px;
 }
 
 #output>div {
@@ -59,7 +63,7 @@ textarea {
 }
 
 #output>div:last-child {
-  border-bottom: none;
+  margin-bottom: 4px;
 }
 
 #output:empty::after {
@@ -68,6 +72,10 @@ textarea {
   border-bottom: 1px solid #888;
   padding: 4px;
   color: #616161;
+}
+
+.msg {
+  background-color: #b2ebf2;
 }
 
 .error {
