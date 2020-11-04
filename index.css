@@ -10,6 +10,7 @@ body {
 main {
   margin: 0 auto;
   width: 1002px;
+  max-width: 90vw;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -25,6 +26,19 @@ svg {
 
 textarea {
   width: 100%;
+}
+
+.scroller-y {
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.scroller-x {
+  max-width: 90vw;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .wrapper {

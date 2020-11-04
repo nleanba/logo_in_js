@@ -44,7 +44,7 @@ message(`Currently supported are ${Object.keys(internalFunctions).join(', ')}`, 
 
 // Functions
 
-function reset() {
+function reset () {
 
   output.innerHTML = ''
 
