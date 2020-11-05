@@ -30,6 +30,16 @@ const internalFunctions = {
   pu: [pu, 0],
   pendown: [pd, 0],
   pd: [pd, 0],
+  setxy: [goto, 2],
+  setx: [goto, 1],
+  sety: [sety, 1],
+  setheading: [seth, 1],
+  seth: [seth, 1],
+  home: [home, 0],
+  hideturtle: [ht, 0],
+  ht: [ht, 0],
+  showturtle: [st, 0],
+  st: [st, 0],
 }
 
 // Event-Listeners
@@ -52,6 +62,7 @@ function reset () {
   state.y = 500
   state.rotation = 0
   state.penDown = true
+  state.hideTurtle = false
 
   turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
 
@@ -60,8 +71,13 @@ function reset () {
 
 // this function does all the moving and drawing, all the others are just wrappers
 function goto (x=state.x, y=state.y, rotation=state.rotation) {
-  // 
-  const hideturtle = x !== Math.min(1000, Math.max(0, x)) || y !== Math.min(1000, Math.max(0, y))
+  x = +x
+  y = +y
+
+  const hideturtle =
+    state.hideTurtle ||
+    x !== Math.min(1000 + constants.turtleRadius, Math.max(0 - constants.turtleRadius, x)) ||
+    y !== Math.min(1000 + constants.turtleRadius, Math.max(0 - constants.turtleRadius, y))
 
   if (state.penDown) {
     // Drawing the line
@@ -102,7 +118,7 @@ function rt (degrees) {
 
 function message (msg, cl='') {
   const el = document.createElement('div')
-  el.classList.add(cl)
+  if (cl) el.classList.add(cl)
   el.textContent = msg
   output.append(el)
 }
@@ -113,6 +129,28 @@ function pu () {
 
 function pd () {
   state.penDown = true
+}
+
+function sety (y) {
+  goto(undefined, y)
+}
+
+function seth (degrees) {
+  goto(undefined, undefined, +degrees)
+}
+
+function home () {
+  goto (500, 500, 0)
+}
+
+function ht () {
+  state.hideTurtle = true
+  goto()
+}
+
+function st () {
+  state.hideTurtle = false
+  goto()
 }
 
 // Parser

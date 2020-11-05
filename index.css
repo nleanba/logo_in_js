@@ -36,6 +36,7 @@ textarea {
 }
 
 .scroller-x {
+  width: 1002px;
   max-width: 90vw;
   overflow-x: auto;
   overflow-y: hidden;
@@ -47,6 +48,7 @@ textarea {
   width: 1002px;
   height: 1002px;
   border: 1px solid #888;
+  overflow: hidden;
 }
 
 .controls {
