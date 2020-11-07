@@ -40,6 +40,9 @@ const internalFunctions = {
   ht: [ht, 0],
   showturtle: [st, 0],
   st: [st, 0],
+  clean: [clean, 0],
+  clearscreen: [cs, 0],
+  cs: [cs, 0],
 }
 
 // Event-Listeners
@@ -50,7 +53,7 @@ resetButton.addEventListener('click', reset)
 // Program
 
 reset()
-message(`Currently supported are ${Object.keys(internalFunctions).join(', ')}`, 'msg')
+message(`Currently supported are ${Object.keys(internalFunctions).join(', ')} and line-comments with ;`, 'msg')
 
 // Functions
 
@@ -66,10 +69,14 @@ function reset () {
 
   turtle.style = `top: ${state.y - constants.turtleRadius}px; left:${state.x - constants.turtleRadius}px;`
 
+  clean()
+}
+
+function clean () {
   canvasCtx.clearRect(0, 0, 1000, 1000)
 }
 
-// this function does all the moving and drawing, all the others are just wrappers
+// this function does all the moving and drawing, all the following are just wrappers
 function goto (x=state.x, y=state.y, rotation=state.rotation) {
   x = +x
   y = +y
@@ -153,10 +160,19 @@ function st () {
   goto()
 }
 
+function cs () {
+  home()
+  clean()
+}
+
 // Parser
 
 function run() {
-  const code = input.value.replace(/\n/g, ' \n ').split(' ').filter(e => e !== '')
+  const code = input.value
+               .replace(/\n/g, ' \n ')
+               .replace(/;[^\n]*/g, '')
+               .split(' ')
+               .filter(e => e !== '')
 
   let line = 1
 
@@ -168,6 +184,7 @@ function run() {
       line++
       continue
     }
+    
 
     if (Object.keys(internalFunctions).includes(token)) {
       const args = []
